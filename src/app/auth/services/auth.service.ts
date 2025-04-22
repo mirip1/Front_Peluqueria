@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Constant } from '../../shared/constant/constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/usuarios';
+  private baseUrl = Constant.apiUrl;
+  private apiUrl = this.baseUrl + '/api/usuarios';
   private currentUserSubject = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) { }

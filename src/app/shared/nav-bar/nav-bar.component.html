@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <div class="navbar-brand">Peluquería</div>
+  <ul class="navbar-nav">
+    <li><a routerLink="/home" routerLinkActive="active">Inicio</a></li>
+    <li><a routerLink="/appointments" routerLinkActive="active">Citas</a></li>
+    <li><a routerLink="/servicios" routerLinkActive="active">Servicios</a></li>
+    <li><a routerLink="/resenas" routerLinkActive="active">Reseñas</a></li>
+  </ul>
+  <div class="navbar-actions">
+    <a *ngIf="!isLoggedIn()" routerLink="/auth/login">Login</a>
+    <a *ngIf="isLoggedIn()" (click)="logout()">Logout</a>
+  </div>
+</nav>

@@ -1,0 +1,28 @@
+<app-nav-bar></app-nav-bar>
+<div class="imagen-fondo">
+  <div
+    class="slide"
+    *ngFor="let img of slides; let i = index"
+    [style.background-image]="'url(' + img + ')'"
+    [class.active]="i === currentSlide">
+  </div>
+
+  <div class="overlay"></div>
+
+  <div class="content">
+    <h1>SERVICIOS</h1>
+    <h2>Y TRATAMIENTOS DE BELLEZA</h2>
+    <h3>para hombre</h3>
+
+  </div>
+
+  <div class="dots">
+    <span
+    *ngFor="let _ of slides; let i = index"
+    [class.active]="i === currentSlide">
+  </span>
+</div>
+</div>
+<div class="descripcion">
+  <p *ngIf="peluqueria">{{ peluqueria.descripcion }}</p>
+</div>

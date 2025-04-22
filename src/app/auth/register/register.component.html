@@ -1,35 +1,81 @@
-<div class="register-container">
-  <h2 class="title">Regístrate</h2>
+<div class="login-container">
+  <h2>Regístrate</h2>
   <div class="underline"></div>
 
-  <form (ngSubmit)="onRegister()" class="register-form">
+  <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="login-form">
 
     <label for="nombre">Nombre</label>
-    <input id="nombre" [(ngModel)]="user.nombre" name="nombre" required type="text" />
-
-    <label for="apellidos">Apellidos</label>
-    <input id="apellidos" [(ngModel)]="user.apellidos" name="apellidos" required type="text" />
-
-    <label for="email">Dirección de correo electrónico</label>
-    <input id="email" [(ngModel)]="user.email" name="email" required type="email" />
-
-    <label for="telefono">Teléfono</label>
-    <input id="nombre" [(ngModel)]="user.telefono" name="telefono" required type="tel" />
-
-    <label for="password">Contraseña</label>
-    <input id="password" [(ngModel)]="user.password" name="password" required type="password" />
-
-    <label for="confirmPassword">Confirmar Contraseña</label>
-    <input id="confirmPassword" name="confirmPassword" type="password" />
-
-    <div class="checkbox-container">
-      <input id="acepto" type="checkbox" name="acepto" />
-      <label for="acepto">
-        Si, acepto recibir comunicaciones informativas de esta web.
-      </label>
+    <input id="nombre" name="nombre" type="text" required pattern="^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{1,29}$"
+      [(ngModel)]="user.nombre" #nombre="ngModel" [class.invalid]="nombre.invalid && nombre.touched" />
+    <div *ngIf="nombre.touched && nombre.invalid" class="error-message">
+      <small *ngIf="nombre.errors?.['required']">El nombre es obligatorio.</small>
+      <small *ngIf="nombre.errors?.['pattern']">Debe empezar con mayúscula y solo letras.</small>
     </div>
 
-    <button type="submit" class="submit-button">Registrarse</button>
+    <label for="apellidos">Apellidos</label>
+    <input id="apellidos" name="apellidos" type="text" required
+      pattern="^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)?$" [(ngModel)]="user.apellidos" #apellidos="ngModel"
+      [class.invalid]="apellidos.invalid && apellidos.touched" />
+    <div *ngIf="apellidos.touched && apellidos.invalid" class="error-message">
+      <small *ngIf="apellidos.errors?.['required']">Los apellidos son obligatorios.</small>
+      <small *ngIf="apellidos.errors?.['pattern']">Debe empezar con mayúscula y solo letras y espacio.</small>
+    </div>
+
+    <label for="email">Correo electrónico</label>
+    <input id="email" name="email" type="email" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+      [(ngModel)]="user.email" #email="ngModel" [class.invalid]="email.invalid && email.touched" />
+    <div *ngIf="email.touched && email.invalid" class="error-message">
+      <small *ngIf="email.errors?.['required']">El correo es obligatorio.</small>
+      <small *ngIf="email.errors?.['pattern']">Formato de correo no válido.</small>
+    </div>
+
+    <label for="telefono">Teléfono</label>
+    <input id="telefono" name="telefono" type="tel" required pattern="^[679]\d{8}$" [(ngModel)]="user.telefono"
+      #telefono="ngModel" [class.invalid]="telefono.invalid && telefono.touched" />
+    <div *ngIf="telefono.touched && telefono.invalid" class="error-message">
+      <small *ngIf="telefono.errors?.['required']">El teléfono es obligatorio.</small>
+      <small *ngIf="telefono.errors?.['pattern']">Debe tener 9 dígitos y empezar por 6,7 o 9.</small>
+    </div>
+
+    <label for="password">Contraseña</label>
+    <input id="password" name="password" type="password" required
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-€#]).{8,}$" [(ngModel)]="user.password" #password="ngModel"
+      [class.invalid]="password.invalid && password.touched" />
+    <div *ngIf="password.touched && password.invalid" class="error-message">
+      <small *ngIf="password.errors?.['required']">La contraseña es obligatoria.</small>
+      <small *ngIf="password.errors?.['pattern']">
+        Min. 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo.
+      </small>
+    </div>
+
+    <label for="confirmPassword">Confirmar Contraseña</label>
+    <input id="confirmPassword" name="confirmPassword" type="password" required [(ngModel)]="user.confirmPassword"
+      #confirm="ngModel" [class.invalid]="
+        (confirm.invalid && confirm.touched) ||
+        (user.password !== user.confirmPassword && confirm.touched)
+      " />
+    <div *ngIf="confirm.touched && confirm.invalid" class="error-message">
+      <small *ngIf="confirm.errors?.['required']">Debes confirmar tu contraseña.</small>
+    </div>
+    <div *ngIf="confirm.touched && user.password !== user.confirmPassword" class="error-message">
+      <small>Las contraseñas no coinciden.</small>
+    </div>
+
+    <div class="checkbox-container">
+      <input id="acepto" name="acepto" type="checkbox" required [(ngModel)]="user.acepto" #acepto="ngModel" />
+      <label for="acepto">
+        Sí, acepto recibir comunicaciones informativas de esta web.
+      </label>
+    </div>
+    <div *ngIf="acepto.touched && acepto.invalid" class="error-message">
+      <small>Debes aceptar los términos.</small>
+    </div>
+
+    <button type="submit" class="btn-login" [disabled]="!registerForm.valid">
+      Registrarse
+    </button>
+    <p class="forgot-password" (click)="goToLogIn()" >¿Ya tienes cuenta? Inicia Sesión</p>
+
   </form>
 
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
