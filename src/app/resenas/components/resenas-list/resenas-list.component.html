@@ -6,12 +6,19 @@
     Ya tienes una reseña activa. Borra tu reseña activa si quieres poner una nueva.
   </p>
   <div class="form-resena">
-    <textarea
-      [(ngModel)]="nueva.comentario"
-      placeholder="Tu opinión..."
-      rows="3"
-      [disabled]="!canAdd">
-    </textarea>
+    <textarea name="comentario" [(ngModel)]="nueva.comentario" #comentario="ngModel" required minlength="5" maxlength="500"
+      pattern='^[A-Za-z0-9ÁÉÍÓÚáéíóúñÑ\s\.,;:!\?\(\)\-]+$' placeholder="Tu opinión..." rows="4" class="textarea"
+      [disabled]="!canAdd" [class.invalid]="comentario.invalid && comentario.touched">
+      </textarea>
+      <div *ngIf="comentario.touched && comentario.invalid" class="error-message">
+        <small *ngIf="comentario.errors?.['minlength']">
+          Mínimo 5 caracteres (actual: {{ comentario.errors?.['minlength'].requiredLength }}).
+        </small>
+        <small *ngIf="comentario.errors?.['maxlength']">Máximo 500 caracteres.</small>
+        <small *ngIf="comentario.errors?.['pattern']">
+          Solo letras, números, espacios y estos símbolos: . , ; : ! ? ( ) -
+        </small>
+      </div>
 
     <label>
       Puntuación:
@@ -36,7 +43,7 @@
     </select>
   </div>
   <div class="lista-resenas">
-    <div class="resena-card" *ngFor="let r of resenas">
+    <div class="resena-card" *ngFor="let r of sortedResenas">
       <div class="resena-header">
         <span class="user">{{ r.nombreUsuario }}</span>
         <span class="stars">{{ r.puntuacion }}★</span>

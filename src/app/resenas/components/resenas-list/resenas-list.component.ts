@@ -60,9 +60,9 @@ export class ResenasListComponent implements OnInit {
   get sortedResenas(): Resena[] {
     const arr = [...this.resenas];
 
-    if (this.sortMode === 'scoreAsc') {
+    if (this.sortMode === 'scoreDesc') {
       arr.sort((a, b) => a.puntuacion - b.puntuacion);
-    } else if (this.sortMode === 'scoreDesc') {
+    } else if (this.sortMode === 'scoreAsc') {
       arr.sort((a, b) => b.puntuacion - a.puntuacion);
     } else {
       arr.sort((a, b) =>
