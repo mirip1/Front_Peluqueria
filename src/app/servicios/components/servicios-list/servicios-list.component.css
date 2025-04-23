@@ -1,0 +1,46 @@
+.servicios-container {
+  padding: 2rem;
+  background: #e6e6e6;
+  min-height: calc(93vh - 64px);
+}
+
+.servicios-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 2rem;
+}
+
+.servicios-grid {
+  padding-top: 2%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.servicio-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.servicio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.servicio-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #222;
+}
+
+.servicio-card .precio {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ff7e57;
+}

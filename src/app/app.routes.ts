@@ -18,6 +18,14 @@ export const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
+  {
+    path: 'servicios',
+    loadChildren: () => import('./servicios/servicios.module').then(m => m.ServiciosModule)
+  },
+  {
+    path: 'resenas', loadChildren: () => import('./resenas/resenas.module').then(m => m.ResenasModule)
+  },
+
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
 
   { path: '**', redirectTo: '/auth/login' }

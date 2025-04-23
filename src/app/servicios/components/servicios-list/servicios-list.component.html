@@ -1,1 +1,10 @@
-<p>servicios-list works!</p>
+<app-nav-bar></app-nav-bar>
+<div class="servicios-container">
+  <h2>Servicios y Precios</h2>
+  <div class="servicios-grid">
+    <div class="servicio-card" *ngFor="let s of servicios">
+      <h3>{{ s.nombre }}</h3>
+      <p class="precio">{{ s.precio | currency:'EUR':'symbol':'1.2-2' }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<app-nav-bar></app-nav-bar>
+<div class="resenas-container">
+  <h2>Reseñas de Clientes</h2>
+
+  <p *ngIf="!canAdd" class="info">
+    Ya tienes una reseña activa. Borra tu reseña activa si quieres poner una nueva.
+  </p>
+  <div class="form-resena">
+    <textarea
+      [(ngModel)]="nueva.comentario"
+      placeholder="Tu opinión..."
+      rows="3"
+      [disabled]="!canAdd">
+    </textarea>
+
+    <label>
+      Puntuación:
+      <select [(ngModel)]="nueva.puntuacion" [disabled]="!canAdd">
+        <option *ngFor="let p of [5,4,3,2,1]" [value]="p">{{p}}★</option>
+      </select>
+    </label>
+
+    <button
+      (click)="enviar()"
+      [disabled]="!canAdd"
+      class="btn-enviar">
+      Enviar reseña
+    </button>
+  </div>
+  <div class="ordenacion">
+    <label for="sort">Ordenar por:</label>
+    <select id="sort" [(ngModel)]="sortMode">
+      <option value="date">Mas reciente</option>
+      <option value="scoreAsc">Mejor valorado</option>
+      <option value="scoreDesc">Peor valorado</option>
+    </select>
+  </div>
+  <div class="lista-resenas">
+    <div class="resena-card" *ngFor="let r of resenas">
+      <div class="resena-header">
+        <span class="user">{{ r.nombreUsuario }}</span>
+        <span class="stars">{{ r.puntuacion }}★</span>
+        <button
+          *ngIf="r.usuarioId === currentUser?.id"
+          (click)="borrar(r.id)"
+          class="btn-borrar">×</button>
+      </div>
+      <p class="comentario">{{ r.comentario }}</p>
+      <div class="resena-footer">
+        <small>{{ r.fecha | date:'short' }}</small>
+      </div>
+    </div>
+  </div>
+</div>

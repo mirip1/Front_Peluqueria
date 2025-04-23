@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Constant } from '../../shared/constant/constant';
 
 @Injectable({
@@ -14,16 +14,20 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials)
+  login(credentials: { email: string; password: string }): Observable<void> {
+    return this.http.post<{ token: string }>(
+        `${this.apiUrl}/login`,
+        credentials
+      )
       .pipe(
         tap(response => {
-          if (response && response.token) {
-            localStorage.setItem('authToken', response.token);
-            this.currentUserSubject.next(credentials.email);
-          }
-        })
+          localStorage.setItem('authToken', response.token);
+        }),
+        map((): void => undefined)
       );
+  }
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
   }
 
   register(userData: any): Observable<any> {
