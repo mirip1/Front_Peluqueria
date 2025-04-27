@@ -1,0 +1,60 @@
+<div class="cal-header">
+  <button (click)="prevMonth()">&lt;</button>
+  <h3>{{ viewDate | date:'MMMM yyyy' }}</h3>
+  <button (click)="nextMonth()">&gt;</button>
+</div>
+
+<div class="cal-grid">
+  <div class="cal-day-name" *ngFor="let name of ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom']">
+    {{name}}
+  </div>
+
+  <div
+  class="cal-cell"
+  *ngFor="let d of monthDays"
+  [class.empty]="!d"
+  [class.past]="isPastDay(d)"
+  [class.available]="hasDisponible(d) && !isPastDay(d)"
+  [class.fullybooked]="hasFullyBooked(d) && !isPastDay(d)"
+  (click)="!isPastDay(d) && !hasFullyBooked(d) ? onDayClick(d) : null"
+>
+  <ng-container *ngIf="d">{{ d.getDate() }}</ng-container>
+</div>
+
+</div>
+
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <button class="close" (click)="closeModal()">×</button>
+    <h4>Franjas para {{ selectedDayDate | date:'dd/MM/yyyy' }}</h4>
+
+    <div class="franjas-grid">
+      <div
+        *ngFor="let s of selectedDaySegments"
+        class="franja"
+        [ngClass]="{
+          available: s.estado==='DISPONIBLE' && !isPastSegment(s),
+          unavailable: s.estado!=='DISPONIBLE' || isPastSegment(s)
+        }"
+        (click)="onSegmentClick(s)">
+        {{ s.startTime }} – {{ s.endTime }}
+      </div>
+    </div>
+
+    <div class="confirm-modal" *ngIf="showConfirmModal">
+      <div class="modal-content small">
+        <p>
+          ¿Quieres reservar una cita el día
+          <strong>{{ selectedDayDate | date:'dd/MM/yyyy' }}</strong>
+          a las <strong>{{ selectedSegment?.startTime }}</strong>?
+        </p>
+        <div class="button-group">
+          <button (click)="confirmReserva()">Aceptar</button>
+          <button (click)="cancelReserva()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

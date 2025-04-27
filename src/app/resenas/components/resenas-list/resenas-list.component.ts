@@ -21,21 +21,21 @@ export class ResenasListComponent implements OnInit {
   canAdd = true;
 
   constructor(
-    private svc: ResenasService,
-    private usuarioSvc: UsuarioService,
+    private service: ResenasService,
+    private usuarioService: UsuarioService,
   ) {}
 
   sortMode: 'date' | 'scoreAsc' | 'scoreDesc' = 'date';
 
   ngOnInit(): void {
-    this.usuarioSvc.getProfile().subscribe(user => {
+    this.usuarioService.getProfile().subscribe(user => {
       this.currentUser = user;
       this.loadResenas();
     });
   }
 
   loadResenas() {
-    this.svc.getAll().subscribe(list => {
+    this.service.getAll().subscribe(list => {
       this.resenas = list;
       this.canAdd = !list.some(r => r.usuarioId === this.currentUser?.id);
     });
@@ -43,7 +43,7 @@ export class ResenasListComponent implements OnInit {
 
   enviar() {
     if (!this.canAdd) return;
-    this.svc.add(this.nueva).subscribe({
+    this.service.add(this.nueva).subscribe({
       next: () => {
         this.nueva = { comentario: '', puntuacion: 5 };
         this.loadResenas();
@@ -52,7 +52,7 @@ export class ResenasListComponent implements OnInit {
   }
 
   borrar(id: number) {
-    this.svc.delete(id).subscribe({
+    this.service.delete(id).subscribe({
       next: () => this.loadResenas(),
       error: err => console.error(err)
     });

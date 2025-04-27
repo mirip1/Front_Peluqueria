@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { Constant } from '../../shared/constant/constant';
+import { HttpClient } from '@angular/common/http';
+import { Cita } from '../../shared/models/cita.model';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CitaService {
+  private apiUrl = `${Constant.apiUrl}/api/citas`;
+
+  constructor(private http: HttpClient) { }
+
+
+  crearCita(cita: { usuarioId: number; fechaYHora: string; }): Observable<Cita> {
+    return this.http.post<Cita>(this.apiUrl, cita);
+  }
+
+  cancelarCita(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, null);
+  }
+
+  obtenerCitasPorUsuario(usuarioId: number): Observable<Cita[]> {
+    return this.http.get<Cita[]>(`${this.apiUrl}/usuario/${usuarioId}`);
+  }
+
+  deleteCita(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}

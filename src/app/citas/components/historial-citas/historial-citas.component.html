@@ -1,0 +1,24 @@
+<div class="historial-container">
+  <h2>Mi Historial de Citas</h2>
+
+  <div *ngIf="loading">Cargando…</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="!loading && citas.length === 0">No tienes ninguna cita.</div>
+
+  <div class="citas-grid">
+    <div class="cita-card" *ngFor="let c of citas">
+      <div class="cita-info">
+        <div class="fecha">{{ c.fechaYHora | date:'dd/MM/yyyy HH:mm' }}</div>
+        <div class="estado" [ngClass]="c.estado.toLowerCase()">
+          {{ c.estado }}
+        </div>
+      </div>
+      <button
+        *ngIf="c.estado === 'ACTIVA'"
+        class="btn-del"
+        (click)="onDelete(c)">
+        Borrar
+      </button>
+    </div>
+  </div>
+</div>

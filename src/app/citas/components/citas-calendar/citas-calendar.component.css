@@ -1,0 +1,56 @@
+/* citas-calendar.component.css */
+.calendar-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.calendar-container h2, .calendar-container h3 {
+  text-align: center;
+  color: #333;
+}
+
+label { display: block; margin: 1rem 0 .5rem; font-weight: 600; }
+
+.grid-horarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: .5rem;
+  margin-bottom: 1.5rem;
+}
+
+.slot {
+  padding: .75rem;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform .2s;
+}
+.slot:hover { transform: translateY(-2px); }
+
+.disponible { background: #c8e6c9; }
+.ocupado   { background: #ffcc80; cursor: not-allowed; }
+.noDisponible { background: #eee; cursor: not-allowed; }
+
+.mis-citas ul {
+  list-style: none;
+  padding: 0;
+}
+.mis-citas li {
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+.mis-citas button {
+  background: #e57373;
+  border: none;
+  color: #fff;
+  padding: .3rem .6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.mis-citas button:hover { background: #ef5350; }
