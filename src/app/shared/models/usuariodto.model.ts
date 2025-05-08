@@ -7,3 +7,7 @@ export interface UsuarioDTO {
   rol: 'CLIENTE' | 'ADMIN';
   baneado: boolean;
 }
+export interface ChangeEmailResponse {
+  usuario: UsuarioDTO;
+  token:   string;
+}

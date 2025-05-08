@@ -1,0 +1,88 @@
+.ventana{
+  padding: 2rem;
+  background: #f9f9f9;
+  min-height: calc(93vh - 64px);
+}
+
+.perfil-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.perfil-container h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.perfil-container hr {
+  border: none;
+  height: 1px;
+  background: #eee;
+  margin: 1.5rem 0;
+}
+
+.perfil-container h3 {
+  font-size: 1.25rem;
+  margin: 1rem 0 0.5rem;
+  color: #555;
+}
+
+.perfil-container input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.perfil-container button {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.perfil-container button:not(.del) {
+  background-color: #ff7e57;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.perfil-container button:not(.del):hover {
+  background-color: #e56b3f;
+}
+
+.perfil-container .del {
+  background-color: #f1f1f1;
+  color: #333;
+  margin-top: 0.5rem;
+}
+
+.perfil-container .del:hover {
+  background-color: #e0e0e0;
+}
+
+.msg {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.msg.success {
+  background: #e0f7fa;
+  color: #006064;
+}
+
+.msg.error {
+  background: #ffebee;
+  color: #c62828;
+}

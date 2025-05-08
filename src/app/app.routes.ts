@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,11 @@ export const routes: Routes = [
     path: 'resenas', loadChildren: () => import('./resenas/resenas.module').then(m => m.ResenasModule)
   },
 
+  { path: 'perfil', component: PerfilComponent },
+
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+
+
 
   { path: '**', redirectTo: '/auth/login' }
 ];
