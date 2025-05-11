@@ -1,0 +1,49 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <h2>Gestión de Usuarios</h2>
+
+  <div *ngIf="loading">Cargando...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <table *ngIf="!loading && usuarios.length">
+    <thead>
+      <tr>
+        <th (click)="sortBy('id')">
+          ID {{ isSorted('id') }}
+        </th>
+        <th (click)="sortBy('email')">
+          Email {{ isSorted('email') }}
+        </th>
+        <th (click)="sortBy('nombre')">
+          Nombre completo {{ isSorted('nombre') }}
+        </th>
+        <th (click)="sortBy('telefono')">
+          Teléfono {{ isSorted('telefono') }}
+        </th>
+        <th (click)="sortBy('fecha')">
+          Fecha de creación {{ isSorted('fecha') }}
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td>{{ u.id }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.nombre }} {{ u.apellidos }}</td>
+        <td>{{ u.telefono }}</td>
+        <td>{{ u.fecha | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <button (click)="toggleBan(u)">
+            {{ u.baneado ? 'Desbanear' : 'Banear' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && usuarios.length === 0">
+    No hay usuarios registrados.
+  </div>
+</div>

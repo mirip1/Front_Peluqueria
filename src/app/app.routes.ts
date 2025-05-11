@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UserAdminComponent } from './admin/user-admin/user-admin.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -30,7 +32,12 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilComponent },
 
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-
+  {
+    path: 'admin/usuarios',
+    component: UserAdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
 
 
   { path: '**', redirectTo: '/auth/login' }

@@ -5,6 +5,7 @@
     <li><a routerLink="/citas" routerLinkActive="active">Citas</a></li>
     <li><a routerLink="/servicios" routerLinkActive="active">Servicios</a></li>
     <li><a routerLink="/resenas" routerLinkActive="active">Reseñas</a></li>
+    <li> <a  *ngIf="(auth.currentUser$| async)?.rol === 'ADMIN'" routerLink="/admin/usuarios">Gestión Usuarios</a></li>
   </ul>
   <div class="navbar-actions">
     <a *ngIf="!isLoggedIn()" routerLink="/auth/login">Login</a>

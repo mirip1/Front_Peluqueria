@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Constant } from '../constant/constant';
 import { ChangeEmailResponse, UsuarioDTO } from '../models/usuariodto.model';
 import { AuthService } from '../../auth/services/auth.service';
@@ -11,7 +11,8 @@ import { AuthService } from '../../auth/services/auth.service';
 export class UsuarioService {
   private apiUrl = `${Constant.apiUrl}/api/usuarios`;
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   getProfile(): Observable<UsuarioDTO> {
     return this.http.get<UsuarioDTO>(`${this.apiUrl}/profile`);
@@ -47,4 +48,5 @@ export class UsuarioService {
       { headers: { 'Content-Type': 'text/plain' } }
     );
   }
+
 }

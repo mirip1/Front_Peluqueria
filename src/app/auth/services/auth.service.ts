@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Constant } from '../../shared/constant/constant';
+import { UsuarioDTO } from '../../shared/models/usuariodto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ import { Constant } from '../../shared/constant/constant';
 export class AuthService {
   private baseUrl = Constant.apiUrl;
   private apiUrl = this.baseUrl + '/api/usuarios';
-  private currentUserSubject = new BehaviorSubject<string | null>(null);
+  private currentUserSubject = new BehaviorSubject<UsuarioDTO | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
 
   constructor(private http: HttpClient) { }
 
@@ -39,7 +42,18 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  get currentUser(): Observable<string | null> {
+  loadProfile(): Observable<UsuarioDTO> {
+    return this.http.get<UsuarioDTO>(`${this.apiUrl}/profile`).pipe(
+      tap(user => this.currentUserSubject.next(user))
+    );
+  }
+  get currentUser(): Observable<UsuarioDTO | null> {
     return this.currentUserSubject.asObservable();
+  }
+  init(): void {
+    const token = this.getToken();
+    if (token) {
+      this.loadProfile().subscribe({ error: () => this.logout() });
+    }
   }
 }

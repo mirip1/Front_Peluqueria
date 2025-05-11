@@ -6,6 +6,7 @@ export interface UsuarioDTO {
   telefono: string;
   rol: 'CLIENTE' | 'ADMIN';
   baneado: boolean;
+  fecha: string;
 }
 export interface ChangeEmailResponse {
   usuario: UsuarioDTO;

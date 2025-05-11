@@ -26,12 +26,16 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.homeService.getPeluqueria().subscribe(p => this.peluqueria = p);
     this.startCarousel();
+
   }
 
   startCarousel() {
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % this.slides.length;
     }, 5000);
+    next: () => {
+      window.location.reload();
+    }
   }
 }
 

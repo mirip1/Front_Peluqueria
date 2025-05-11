@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptor
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { AuthInterceptor } from './app/auth/auth.interceptor';
+import { AuthService } from './app/auth/services/auth.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,4 +18,9 @@ bootstrapApplication(AppComponent, {
       multi: true
     }
   ]
-}).catch(err => console.error(err));
+})
+.then(appRef => {
+  const auth = appRef.injector.get(AuthService);
+  auth.init();
+})
+.catch(err => console.error(err));
