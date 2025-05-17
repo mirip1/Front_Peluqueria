@@ -23,8 +23,16 @@ export class HomePageComponent implements OnInit {
 
   constructor(private homeService: HomeService) {}
 
+
   ngOnInit(): void {
+    const recargar = sessionStorage.getItem('recargado');
+
     this.homeService.getPeluqueria().subscribe(p => this.peluqueria = p);
+    if (!recargar) {
+      sessionStorage.setItem('recargado', 'true');
+      window.location.reload();
+    }
+
     this.startCarousel();
 
   }
@@ -33,9 +41,7 @@ export class HomePageComponent implements OnInit {
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % this.slides.length;
     }, 5000);
-    next: () => {
-      window.location.reload();
-    }
+
   }
 }
 

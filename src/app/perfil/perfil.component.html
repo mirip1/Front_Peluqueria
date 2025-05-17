@@ -7,17 +7,55 @@
     <hr />
 
     <h3>Cambiar contraseña</h3>
-    <input [(ngModel)]="oldPass" #oldPassNg="ngModel" (ngModelChange)="clearMessages()" type="password"
-      placeholder="Contraseña actual" required />
-    <input [(ngModel)]="newPass" #newPassNg="ngModel" (ngModelChange)="clearMessages()" type="password"
-      placeholder="Contraseña nueva" required />
-    <button (click)="onChangePassword()" [disabled]="oldPassNg.invalid || newPassNg.invalid">
-      Actualizar contraseña
-    </button>
+    <input
+      [(ngModel)]="oldPass"
+      #oldPassNg="ngModel"
+      (ngModelChange)="clearMessages()"
+      type="password"
+      placeholder="Contraseña actual"
+      required
+    />
+    <input
+      [(ngModel)]="newPass"
+      #newPassNg="ngModel"
+      (ngModelChange)="clearMessages()"
+      type="password"
+      placeholder="Nueva contraseña"
+      required
+    />
+    <input
+    [(ngModel)]="confirmPass"
+    #confirmNg="ngModel"
+    [class.invalid]="confirmNg.invalid && confirmNg.touched"
+    type="password"
+    placeholder="Confirmar contraseña"
+  />
+
+    <div *ngIf="confirmNg.touched && newPass !== confirmPass" class="error-message">
+      <small>Las contraseñas no coinciden.</small>
+    </div>
+    <button
+    (click)="onChangePassword()"
+    [disabled]="
+      oldPassNg.invalid ||
+      newPassNg.invalid ||
+      confirmNg.invalid ||
+      newPass !== confirmPass
+    "
+  >
+    Actualizar contraseña
+  </button>
 
     <h3>Cambiar correo</h3>
-    <input [(ngModel)]="emailForm" #emailNg="ngModel" (ngModelChange)="clearMessages()" type="email"
-      placeholder="Nuevo correo" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" />
+    <input
+      [(ngModel)]="emailForm"
+      #emailNg="ngModel"
+      (ngModelChange)="clearMessages()"
+      type="email"
+      placeholder="Nuevo correo"
+      required
+      pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+    />
     <div *ngIf="emailNg.touched && emailNg.invalid" class="error-message">
       <small *ngIf="emailNg.errors?.['required']">El correo es obligatorio.</small>
       <small *ngIf="emailNg.errors?.['pattern']">Formato de correo no válido.</small>
@@ -27,8 +65,15 @@
     </button>
 
     <h3>Cambiar teléfono</h3>
-    <input [(ngModel)]="telefonoForm" #telefonoNg="ngModel" (ngModelChange)="clearMessages()" type="tel"
-      placeholder="Nuevo teléfono" required pattern="^[679]\d{8}$" />
+    <input
+      [(ngModel)]="telefonoForm"
+      #telefonoNg="ngModel"
+      (ngModelChange)="clearMessages()"
+      type="tel"
+      placeholder="Nuevo teléfono"
+      required
+      pattern="^[679]\d{8}$"
+    />
     <div *ngIf="telefonoNg.touched && telefonoNg.invalid" class="error-message">
       <small *ngIf="telefonoNg.errors?.['required']">El teléfono es obligatorio.</small>
       <small *ngIf="telefonoNg.errors?.['pattern']">
@@ -40,11 +85,9 @@
     </button>
 
     <h3>Eliminar cuenta</h3>
-    <button class="del" (click)="onDeleteAccount()">
-      Eliminar mi cuenta
-    </button>
+    <button class="del" (click)="onDeleteAccount()">Eliminar mi cuenta</button>
 
     <div class="msg success" *ngIf="msgSuccess">{{ msgSuccess }}</div>
-    <div class="msg error" *ngIf="msgError">{{ msgError }}</div>
+    <div class="msg error"   *ngIf="msgError">{{ msgError }}</div>
   </div>
 </div>

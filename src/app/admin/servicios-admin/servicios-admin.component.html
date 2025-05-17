@@ -1,0 +1,48 @@
+<app-nav-bar></app-nav-bar>
+<div class="container">
+  <div class="page-container">
+    <h2 class="page-title">Gestión de Servicios</h2>
+
+    <form (ngSubmit)="crear()" class="form-inline">
+      <input class="input-field" [(ngModel)]="nuevoServicio.nombre" name="nombre" placeholder="Nombre del servicio"
+        required />
+      <input class="input-field" [(ngModel)]="nuevoServicio.precio" name="precio" type="number" placeholder="Precio (€)"
+        required />
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th class="actions-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of servicios">
+          <td *ngIf="!editServicio || editServicio.id !== s.id">{{ s.nombre }}</td>
+          <td *ngIf="editServicio?.id === s.id">
+            <input class="input-field small" [(ngModel)]="editServicio!.nombre" name="editNombre" required />
+          </td>
+
+          <td *ngIf="!editServicio || editServicio.id !== s.id">
+            {{ s.precio | currency:'EUR':'symbol':'1.2-2' }}
+          </td>
+          <td *ngIf="editServicio?.id === s.id">
+            <input class="input-field small" [(ngModel)]="editServicio!.precio" name="editPrecio" type="number"
+              required />
+          </td>
+
+          <td class="actions-col">
+            <button *ngIf="editServicio?.id !== s.id" class="btn btn-secondary" (click)="editar(s)">Editar</button>
+            <button *ngIf="editServicio?.id === s.id" class="btn btn-success" (click)="guardar()">Guardar</button>
+            <button class="btn btn-danger" (click)="eliminar(s.id!)">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

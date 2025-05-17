@@ -21,7 +21,10 @@ export class LoginComponent {
   goToRegister(): void {
     this.router.navigate(['/auth/register']);
   }
+
   onLogin(): void {
+    localStorage.clear();
+    sessionStorage.clear();
     this.authService.login(this.credentials).subscribe({
       next: () => {
         this.router.navigate(['/home']);

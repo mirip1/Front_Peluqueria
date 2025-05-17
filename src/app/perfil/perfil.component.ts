@@ -19,6 +19,7 @@ export class PerfilComponent implements OnInit {
 
   oldPass = '';
   newPass = '';
+  confirmPass = '';      // ← campo para confirmar
   emailForm = '';
   telefonoForm = '';
 
@@ -27,6 +28,9 @@ export class PerfilComponent implements OnInit {
 
   @ViewChild('emailNg')    emailNg!: NgModel;
   @ViewChild('telefonoNg') telefonoNg!: NgModel;
+  @ViewChild('oldPassNg')  oldPassNg!: NgModel;
+  @ViewChild('newPassNg')  newPassNg!: NgModel;
+  @ViewChild('confirmNg')  confirmNg!: NgModel;
 
   constructor(
     private userService: UsuarioService,
@@ -53,10 +57,18 @@ export class PerfilComponent implements OnInit {
 
   onChangePassword() {
     this.clearMessages();
-    if (!this.oldPass || !this.newPass) return;
+
+    if (this.oldPassNg.invalid || this.newPassNg.invalid || this.confirmNg.invalid) {
+      return;
+    }
+    if (this.newPass !== this.confirmPass) {
+      this.msgError = 'Las contraseñas nuevas no coinciden.';
+      return;
+    }
+
     this.userService.changePassword(this.oldPass, this.newPass).subscribe({
-      next: () => this.msgSuccess = 'Contraseña actualizada',
-      error: e => this.msgError = e.error || 'Error actualizando contraseña'
+      next: () => this.msgSuccess = 'Contraseña actualizada correctamente.',
+      error: e => this.msgError = e.error || 'Error actualizando contraseña.'
     });
   }
 
@@ -76,7 +88,7 @@ export class PerfilComponent implements OnInit {
     this.clearMessages();
     if (this.telefonoNg.invalid) return;
     this.userService.changeTelefono(this.telefonoForm).subscribe({
-      next: () => this.msgSuccess = 'Teléfono actualizado correctamente',
+      next: () => this.msgSuccess = 'Teléfono actualizado correctamente.',
       error: e => this.msgError = e.error || 'Error actualizando teléfono'
     });
   }
