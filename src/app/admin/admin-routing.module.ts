@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { ServiciosAdminComponent } from './servicios-admin/servicios-admin.component';
+import { CitasAdminComponent } from './citas-admin/citas-admin.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['ADMIN'] }
   },
+  {
+    path: 'citas',
+    component: CitasAdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  }
 ];
 
 @NgModule({

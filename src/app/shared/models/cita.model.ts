@@ -3,4 +3,5 @@ export interface Cita {
   usuarioId: number;
   fechaYHora: string;
   estado: 'ACTIVA' | 'CANCELADA' | 'FINALIZADA';
+  usuarioEmail: string;
 }

@@ -1,0 +1,51 @@
+<app-nav-bar></app-nav-bar>
+<div class="page-container">
+  <h2 class="page-title">Gestión de Citas</h2>
+
+  <!-- Filtros -->
+  <div class="filter-container">
+    <input class="filter-input" type="text" placeholder="Buscar por email..." [(ngModel)]="filterEmail" />
+    <select class="filter-select" [(ngModel)]="filterEstado">
+      <option value="">Todas</option>
+      <option value="ACTIVA">Activas</option>
+      <option value="CANCELADA">Canceladas</option>
+      <option value="FINALIZADA">Finalizadas</option>
+    </select>
+
+
+  </div>
+  <!-- Tabla -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th (click)="sortBy('id')">
+          ID {{ isSorted('id') }}
+        </th>
+        <th (click)="sortBy('usuarioEmail')">
+          Email {{ isSorted('usuarioEmail') }}
+        </th>
+        <th (click)="sortBy('fechaYHora')">
+          Fecha y Hora {{ isSorted('fechaYHora') }}
+        </th>
+        <th (click)="sortBy('estado')">
+          Estado {{ isSorted('estado') }}
+        </th>
+        <th>Acciones</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of displayedCitas">
+      <td>{{ c.id }}</td>
+        <td>{{ c.usuarioEmail}}</td>
+        <td>{{ c.fechaYHora | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td [ngClass]="'estado ' + c.estado.toLowerCase()">
+          {{ c.estado }}
+        </td>
+        <td class="actions-col">
+          <button *ngIf="c.estado === 'ACTIVA'" class="btn-secondary" (click)="cancelarCita(c.id)">Cancelar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

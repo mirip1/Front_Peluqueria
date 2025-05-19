@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UsuarioDTO } from '../../shared/models/usuariodto.model';
 import { HttpClient } from '@angular/common/http';
 import { Servicio } from '../../shared/models/servicio.model';
+import { Cita } from '../../shared/models/cita.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { Servicio } from '../../shared/models/servicio.model';
 export class AdminService {
   private apiUrlAdminUsuarios = `${Constant.apiUrl}/api/admin/usuarios`;
   private apiUrlServicios = `${Constant.apiUrl}/api/servicios`;
+  private apiUrlCitas = `${Constant.apiUrl}/api/citas`;
 
 
   constructor(private http: HttpClient) { }
@@ -42,5 +44,10 @@ export class AdminService {
   deleteServicio(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlServicios}/${id}`);
   }
-
+  listCitas(): Observable<Cita[]> {
+    return this.http.get<Cita[]>(`${this.apiUrlCitas}`);
+  }
+  cancelCita(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrlCitas}/${id}`, null);
+  }
 }
