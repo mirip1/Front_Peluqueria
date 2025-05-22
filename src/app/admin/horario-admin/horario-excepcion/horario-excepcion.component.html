@@ -1,0 +1,72 @@
+<!-- CALENDARIO -->
+<div class="titulo">
+ <h2>Gestion Horario</h2>
+</div>
+<div class="cal-header">
+  <button (click)="prevMonth()">&lt;</button>
+  <h3>{{ viewDate | date:'MMMM yyyy' }}</h3>
+  <button (click)="nextMonth()">&gt;</button>
+</div>
+
+<div class="cal-grid">
+  <div class="cal-day-name" *ngFor="let name of ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom']">
+    {{ name }}
+  </div>
+  <div
+    class="cal-cell"
+    *ngFor="let d of monthDays"
+    [class.empty]="!d"
+    (click)="d && onDayClick(d)"
+  >
+    <ng-container *ngIf="d">{{ d.getDate() }}</ng-container>
+  </div>
+</div>
+
+<!-- MODAL DE EDICIÓN -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-window" (click)="$event.stopPropagation()">
+
+    <h4>Excepciones para {{ selectedDate | date:'dd/MM/yyyy' }}</h4>
+    <section *ngIf="selectedIntervals.length">
+      <h5 *ngIf="selectedIntervals[0].isException; else baseTitle">Excepciones</h5>
+      <ng-template #baseTitle><h5>Intervalos Base</h5></ng-template>
+      <table class="data-table">
+        <thead>
+          <tr><th>Inicio</th><th>Fin</th><th>Estado</th><th>Acción</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of selectedIntervals">
+            <td>{{ h.horaInicio }}</td>
+            <td>{{ h.horaFin }}</td>
+            <td>{{ h.estado }}</td>
+            <td>
+              <button
+                *ngIf="h.isException"
+                class="btn btn-danger"
+                (click)="deleteException(h.id!)">
+                Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <button class="btn btn-primary mb-2" (click)="showNew = !showNew">
+      {{ showNew ? 'Cancelar' : 'Añadir excepción' }}
+    </button>
+
+    <form *ngIf="showNew" (ngSubmit)="createException()" class="form-inline mb-4">
+      <input type="time" [(ngModel)]="newException.horaInicio" name="hi" required class="input-field small" />
+      <input type="time" [(ngModel)]="newException.horaFin"    name="hf" required class="input-field small" />
+      <select [(ngModel)]="newException.estado" name="st" required class="input-field small">
+        <option value="DISPONIBLE">Disponible</option>
+        <option value="NO_DISPONIBLE">No Disponible</option>
+      </select>
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+    </div>
+  </div>
+</div>

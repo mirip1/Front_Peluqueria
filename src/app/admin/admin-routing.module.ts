@@ -4,6 +4,7 @@ import { UserAdminComponent } from './user-admin/user-admin.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { ServiciosAdminComponent } from './servicios-admin/servicios-admin.component';
 import { CitasAdminComponent } from './citas-admin/citas-admin.component';
+import { HorarioAdminComponent } from './horario-admin/horario-admin.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,12 @@ const routes: Routes = [
   {
     path: 'citas',
     component: CitasAdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'horarios',
+    component: HorarioAdminComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ADMIN'] }
   }

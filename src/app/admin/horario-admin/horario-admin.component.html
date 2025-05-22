@@ -1,0 +1,70 @@
+<app-nav-bar></app-nav-bar>
+
+<app-horario-excepcion></app-horario-excepcion>
+<div class="page-container">
+  <h2 class="page-title">Panel Horario Base</h2>
+
+  <!-- Añadir intervalo -->
+  <div class="form-inline">
+    <button class="btn btn-primary" (click)="showNew = true">Añadir intervalo</button>
+  </div>
+
+  <!-- Formulario inline para nuevo intervalo -->
+  <form *ngIf="showNew" (ngSubmit)="crearBase()" class="form-inline">
+    <select
+      [(ngModel)]="newInterval.diaSemana"
+      name="diaSemana"
+      required
+      class="input-field small"
+    >
+      <option *ngFor="let d of diasSemana" [value]="d">{{ d }}</option>
+    </select>
+
+    <input
+      type="time"
+      [(ngModel)]="newInterval.horaInicio"
+      name="horaInicio"
+      required
+      class="input-field small"
+    />
+
+    <input
+      type="time"
+      [(ngModel)]="newInterval.horaFin"
+      name="horaFin"
+      required
+      class="input-field small"
+    />
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="showNew = false">
+      Cancelar
+    </button>
+  </form>
+
+  <!-- Tabla de horarios base -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Día</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hb of horarioBase">
+        <td>{{ hb.diaSemana }}</td>
+        <td>{{ hb.horaInicio }}</td>
+        <td>{{ hb.horaFin }}</td>
+        <td>{{ hb.estado }}</td>
+        <td class="actions-col">
+          <button class="btn btn-danger" (click)="borrarBase(hb.id!)">
+            Borrar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

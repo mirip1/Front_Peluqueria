@@ -4,11 +4,15 @@ export interface HorarioDTO {
   horaInicio: string;
   horaFin: string;
   estado: 'DISPONIBLE' | 'NO_DISPONIBLE';
+  isException?: boolean;
+
 }
 
 export interface DisponibilidadDiaDTO {
   fecha: string;
   franjas: HorarioDTO[];
+  excepciones?: HorarioDTO[];
+
 }
 
 export interface Segmento {

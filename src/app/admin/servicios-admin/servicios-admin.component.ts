@@ -17,21 +17,21 @@ export class ServiciosAdminComponent implements OnInit {
   editServicio: Servicio | null = null;
   error = '';
 
-  constructor(private adminSvc: AdminService) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.cargarServicios();
   }
 
   cargarServicios() {
-    this.adminSvc.listServicios().subscribe({
+    this.adminService.listServicios().subscribe({
       next: data => this.servicios = data,
       error: () => this.error = 'Error cargando servicios'
     });
   }
 
   crear() {
-    this.adminSvc.addServicio(this.nuevoServicio).subscribe({
+    this.adminService.addServicio(this.nuevoServicio).subscribe({
       next: () => {
         this.cargarServicios();
         this.nuevoServicio = {nombre: '', precio: 0 };
@@ -46,7 +46,7 @@ export class ServiciosAdminComponent implements OnInit {
 
   guardar() {
     if (!this.editServicio?.id) return;
-    this.adminSvc.updateServicio(this.editServicio.id, this.editServicio).subscribe({
+    this.adminService.updateServicio(this.editServicio.id, this.editServicio).subscribe({
       next: () => {
         this.cargarServicios();
         this.editServicio = null;
@@ -57,7 +57,7 @@ export class ServiciosAdminComponent implements OnInit {
 
   eliminar(id: number) {
     if (!confirm('¿Eliminar servicio?')) return;
-    this.adminSvc.deleteServicio(id).subscribe({
+    this.adminService.deleteServicio(id).subscribe({
       next: () => this.cargarServicios(),
       error: () => alert('No se pudo borrar')
     });
