@@ -22,6 +22,10 @@ export class LoginComponent {
     this.router.navigate(['/auth/register']);
   }
 
+  goToForgot(): void {
+    this.router.navigate(['/forgot-password']);
+  }
+
   onLogin(): void {
     localStorage.clear();
     sessionStorage.clear();

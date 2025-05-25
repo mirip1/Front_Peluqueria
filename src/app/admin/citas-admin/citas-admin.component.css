@@ -62,12 +62,14 @@
   background-color: #e56b3f;
 }
 
-.btn-danger {
-  background-color: #f44336;
+.btn-secondary {
+  border: none;
+  border-radius: 2rem; padding: 0.4rem 1rem; font-weight: 600; cursor: pointer;
+  background: #ff7e57;
   color: #fff;
 }
 
-.btn-danger:hover {
+.btn-secondary:hover {
   background-color: #c62828;
 }
 

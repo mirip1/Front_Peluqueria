@@ -14,7 +14,7 @@
       <button type="button"  (click)="goToRegister()" class="btn-register">Registro</button>
     </div>
 
-    <p class="forgot-password">¿Has olvidado tu contraseña?</p>
+    <p class="forgot-password" (click)="goToForgot()" >¿Has olvidado tu contraseña?</p>
   </form>
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 

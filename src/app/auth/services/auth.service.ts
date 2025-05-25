@@ -50,6 +50,17 @@ export class AuthService {
   get currentUser(): Observable<UsuarioDTO | null> {
     return this.currentUserSubject.asObservable();
   }
+
+forgotPassword(email: string): Observable<void> {
+  return this.http.post<void>(
+    `${Constant.apiUrl}/api/usuarios/forgot-password`,
+    null,
+    { params: { email } }
+  );
+}
+
+
+
   init(): void {
     const token = this.getToken();
     if (token) {
