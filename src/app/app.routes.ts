@@ -16,7 +16,8 @@ export const routes: Routes = [
   },
   {
     path: 'citas',
-    loadChildren: () => import('./citas/citas.module').then(m => m.CitasModule)
+    loadChildren: () => import('./citas/citas.module').then(m => m.CitasModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'home',
@@ -24,15 +25,19 @@ export const routes: Routes = [
   },
   {
     path: 'servicios',
-    loadChildren: () => import('./servicios/servicios.module').then(m => m.ServiciosModule)
+    loadChildren: () => import('./servicios/servicios.module').then(m => m.ServiciosModule),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'resenas', loadChildren: () => import('./resenas/resenas.module').then(m => m.ResenasModule)
+    path: 'resenas', loadChildren: () => import('./resenas/resenas.module').then(m => m.ResenasModule),
+    canActivate: [AuthGuard]
   },
 
-  { path: 'perfil', component: PerfilComponent },
+  { path: 'perfil', component: PerfilComponent,
+    canActivate: [AuthGuard]
+  },
 
-  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full', },
 
   { path: 'forgot-password', component: ForgotPasswordComponent },
 

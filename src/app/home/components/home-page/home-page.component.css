@@ -99,3 +99,13 @@
   font-size: x-large;
 
 }
+.ubicacion {
+  width: 97%;
+  height: 60vh;
+  background-color: #180909;
+  color: #fff;
+  padding: 1%;
+  padding-left: 2%;
+  font-size: x-large;
+
+}

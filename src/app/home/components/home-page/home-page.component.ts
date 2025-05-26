@@ -4,6 +4,7 @@ import { HomeService } from '../../services/home.service';
 import { NavBarComponent } from "../../../shared/nav-bar/nav-bar.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-page',
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
   peluqueria: Peluqueria | null = null;
+  mapUrl?: SafeResourceUrl;
 
   slides = [
     'assets/images/pelado1.jpg',
@@ -21,13 +23,18 @@ export class HomePageComponent implements OnInit {
   ];
   currentSlide = 0;
 
-  constructor(private homeService: HomeService) {}
+  private readonly googleApiKey = '${API_GOOGLE}';
+
+  constructor(private homeService: HomeService, private sanitizer: DomSanitizer) {}
 
 
   ngOnInit(): void {
     const recargar = sessionStorage.getItem('recargado');
 
-    this.homeService.getPeluqueria().subscribe(p => this.peluqueria = p);
+    this.homeService.getPeluqueria().subscribe(p => {
+      this.peluqueria = p;
+      this.updateMapUrl();
+    });
     if (!recargar) {
       sessionStorage.setItem('recargado', 'true');
       window.location.reload();
@@ -43,5 +50,16 @@ export class HomePageComponent implements OnInit {
     }, 5000);
 
   }
+    private updateMapUrl() {
+    if (!this.peluqueria?.ubicacion) {
+      this.mapUrl = undefined;
+      console.log(this.peluqueria?.ubicacion);
+      return;
+    }
+    const encoded = encodeURIComponent(this.peluqueria.ubicacion);
+    const url = `https://www.google.com/maps/embed/v1/place?key=${this.googleApiKey}&q=${encoded}`;
+    this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
 }
 

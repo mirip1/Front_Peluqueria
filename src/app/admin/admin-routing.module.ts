@@ -5,6 +5,7 @@ import { AuthGuard } from '../shared/guards/auth.guard';
 import { ServiciosAdminComponent } from './servicios-admin/servicios-admin.component';
 import { CitasAdminComponent } from './citas-admin/citas-admin.component';
 import { HorarioAdminComponent } from './horario-admin/horario-admin.component';
+import { PeluqueriaAdminComponent } from './peluqueria-admin/peluqueria-admin.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,12 @@ const routes: Routes = [
   {
     path: 'horarios',
     component: HorarioAdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'peluqueria',
+    component: PeluqueriaAdminComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ADMIN'] }
   }

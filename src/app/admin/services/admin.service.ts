@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Servicio } from '../../shared/models/servicio.model';
 import { Cita } from '../../shared/models/cita.model';
 import { DisponibilidadDiaDTO, HorarioDTO } from '../../shared/models/horariodto.model';
+import { Peluqueria } from '../../shared/models/peluqueria.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AdminService {
   private apiUrlServicios = `${Constant.apiUrl}/api/servicios`;
   private apiUrlCitas = `${Constant.apiUrl}/api/citas`;
   private apiUrlHorario = `${Constant.apiUrl}/api/horarios`;
+  private apiPeluqueria = `${Constant.apiUrl}/api/peluqueria`;
 
 
 
@@ -77,5 +79,12 @@ export class AdminService {
   }
   deleteExcepcion(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlHorario}/excepcion/${id}`);
+  }
+  getPeluqueria(): Observable<Peluqueria> {
+    return this.http.get<Peluqueria>(this.apiPeluqueria);
+  }
+
+  updatePeluqueria(dto: Peluqueria): Observable<Peluqueria> {
+    return this.http.put<Peluqueria>(this.apiPeluqueria, dto);
   }
 }

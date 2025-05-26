@@ -1,5 +1,5 @@
 <nav class="navbar">
-  <div class="navbar-brand">Peluquería</div>
+  <div class="navbar-brand"> {{titulo}}</div>
   <ul class="navbar-nav">
     <li><a routerLink="/home" routerLinkActive="active">Inicio</a></li>
     <li><a routerLink="/citas" routerLinkActive="active">Citas</a></li>
@@ -9,6 +9,7 @@
     <li> <a  *ngIf="(auth.currentUser$| async)?.rol === 'ADMIN'" routerLink="/admin/servicios">Gestión Servicios</a></li>
     <li> <a  *ngIf="(auth.currentUser$| async)?.rol === 'ADMIN'" routerLink="/admin/citas">Gestión Citas</a></li>
     <li> <a  *ngIf="(auth.currentUser$| async)?.rol === 'ADMIN'" routerLink="/admin/horarios">Gestión Horarios</a></li>
+    <li> <a  *ngIf="(auth.currentUser$| async)?.rol === 'ADMIN'" routerLink="/admin/peluqueria">Gestión Peluquería</a></li>
   </ul>
   <div class="navbar-actions">
     <a *ngIf="!isLoggedIn()" routerLink="/auth/login">Login</a>

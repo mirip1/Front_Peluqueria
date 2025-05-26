@@ -1,9 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <div class="imagen-fondo">
-  <div
-    class="slide"
-    *ngFor="let img of slides; let i = index"
-    [style.background-image]="'url(' + img + ')'"
+  <div class="slide" *ngFor="let img of slides; let i = index" [style.background-image]="'url(' + img + ')'"
     [class.active]="i === currentSlide">
   </div>
 
@@ -17,12 +14,21 @@
   </div>
 
   <div class="dots">
-    <span
-    *ngFor="let _ of slides; let i = index"
-    [class.active]="i === currentSlide">
-  </span>
-</div>
+    <span *ngFor="let _ of slides; let i = index" [class.active]="i === currentSlide">
+    </span>
+  </div>
 </div>
 <div class="descripcion">
   <p *ngIf="peluqueria">{{ peluqueria.descripcion }}</p>
 </div>
+
+ <div class="ubicacion" *ngIf="mapUrl">
+    <p>Nos puedes encontrar aquí:</p>
+    <iframe
+      width="100%"
+      height="500"
+      [src]="mapUrl"
+      style="border:0"
+      allowfullscreen>
+    </iframe>
+  </div>
