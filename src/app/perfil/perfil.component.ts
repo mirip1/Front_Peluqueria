@@ -19,7 +19,7 @@ export class PerfilComponent implements OnInit {
 
   oldPass = '';
   newPass = '';
-  confirmPass = '';      // ← campo para confirmar
+  confirmPass = '';
   emailForm = '';
   telefonoForm = '';
 
@@ -37,6 +37,7 @@ export class PerfilComponent implements OnInit {
     private router: Router
   ) {}
 
+  /** Método que carga el perfil del usuario al iniciar el componente. */
   ngOnInit() {
     this.userService.getProfile().subscribe(u => {
       this.user = u;
@@ -45,16 +46,19 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  /** Método que limpia los mensajes de error y éxito. */
   clearMessages() {
     this.msgError   = '';
     this.msgSuccess = '';
   }
 
+  /** Método que cierra la sesión y redirige al login. */
   onLogout() {
     this.userService.logout();
     this.router.navigate(['/auth/login']);
   }
 
+  /** Método que cambia la contraseña si las validaciones pasan. */
   onChangePassword() {
     this.clearMessages();
 
@@ -72,6 +76,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  /** Método que cambia el correo y fuerza un logout para volver a iniciar sesión. */
   onChangeEmail() {
     this.clearMessages();
     if (this.emailNg.invalid) return;
@@ -84,6 +89,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  /** Método que cambia el teléfono si el campo es válido. */
   onChangeTelefono() {
     this.clearMessages();
     if (this.telefonoNg.invalid) return;
@@ -93,6 +99,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  /** Método que elimina la cuenta tras confirmar la acción. */
   onDeleteAccount() {
     this.clearMessages();
     if (!confirm('¿Eliminar cuenta?')) return;

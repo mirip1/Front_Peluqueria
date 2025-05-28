@@ -15,6 +15,7 @@ export class ServiciosListComponent implements OnInit {
 
   constructor(private servicioSvc: ServiciosService) {}
 
+  // Método que carga la lista de servicios al inicializar el componente
   ngOnInit(): void {
     this.servicioSvc.getAll()
       .subscribe((list: Servicio[]) => {

@@ -19,10 +19,16 @@ export class UserAdminComponent implements OnInit {
 
   constructor(private adminService: AdminService) {}
 
+  /**
+   * Método que se ejecuta al inicializar el componente y dispara la carga de usuarios.
+   */
   ngOnInit() {
     this.fetch();
   }
 
+  /**
+   * Método que obtiene la lista de usuarios y actualiza el estado de carga.
+   */
   fetch() {
     this.loading = true;
     this.adminService.listUsers().subscribe({
@@ -37,6 +43,9 @@ export class UserAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que alterna el estado baneado de un usuario solicitando confirmación.
+   */
   toggleBan(u: UsuarioDTO) {
     const action = u.baneado ? 'desban' : 'ban';
     if (!confirm(`¿Seguro que deseas ${action}ear a ${u.email}?`)) return;
@@ -48,6 +57,10 @@ export class UserAdminComponent implements OnInit {
       error: () => alert('Falló la operación')
     });
   }
+
+  /**
+   * Método que ordena la tabla de usuarios por la columna indicada.
+   */
   sortBy(col: string) {
     if (this.sortColumn === col) {
       this.sortAsc = !this.sortAsc;
@@ -83,6 +96,9 @@ export class UserAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que retorna el indicador de orden actual para la columna.
+   */
   isSorted(col: string): '↑' | '↓' | '' {
     if (this.sortColumn !== col) return '';
     return this.sortAsc ? '↑' : '↓';

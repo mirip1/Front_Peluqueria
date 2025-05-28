@@ -25,6 +25,9 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  /**
+   * Método que procesa el registro validando el formulario y enviando los datos al servicio.
+   */
   onRegister(form: any): void {
     if (!form.valid) return;
 
@@ -43,6 +46,10 @@ export class RegisterComponent {
       }
     });
   }
+
+  /**
+   * Método que redirige a la página de login.
+   */
   goToLogIn(): void {
     this.router.navigate(['/auth/login']);
   }

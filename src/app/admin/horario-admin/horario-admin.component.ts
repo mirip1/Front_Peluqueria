@@ -28,14 +28,23 @@ export class HorarioAdminComponent implements OnInit {
 
   constructor(private adminService: AdminService) {}
 
+  /**
+   * Método que se ejecuta al iniciar el componente y carga el horario base.
+   */
   ngOnInit() {
     this.loadBase();
   }
 
+  /**
+   * Método que obtiene el horario base desde el servicio.
+   */
   loadBase() {
     this.adminService.getHorarioBase().subscribe(list => this.horarioBase = list);
   }
 
+  /**
+   * Método que crea un nuevo intervalo de horario base.
+   */
   crearBase() {
     const dto: HorarioDTO = {
       id: 0,
@@ -50,6 +59,9 @@ export class HorarioAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que elimina un intervalo de horario base tras confirmación.
+   */
   borrarBase(id: number) {
     if (!confirm('¿Eliminar este intervalo?')) return;
     this.adminService.deleteHorarioBase(id).subscribe(() => this.loadBase());

@@ -19,10 +19,16 @@ export class ServiciosAdminComponent implements OnInit {
 
   constructor(private adminService: AdminService) {}
 
+  /**
+   * Método que inicializa la carga de servicios.
+   */
   ngOnInit() {
     this.cargarServicios();
   }
 
+  /**
+   * Método que obtiene la lista de servicios.
+   */
   cargarServicios() {
     this.adminService.listServicios().subscribe({
       next: data => this.servicios = data,
@@ -30,6 +36,9 @@ export class ServiciosAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que crea un nuevo servicio.
+   */
   crear() {
     this.adminService.addServicio(this.nuevoServicio).subscribe({
       next: () => {
@@ -40,10 +49,16 @@ export class ServiciosAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que prepara la edición de un servicio.
+   */
   editar(s: Servicio) {
     this.editServicio = { ...s };
   }
 
+  /**
+   * Método que guarda los cambios de un servicio editado.
+   */
   guardar() {
     if (!this.editServicio?.id) return;
     this.adminService.updateServicio(this.editServicio.id, this.editServicio).subscribe({
@@ -55,6 +70,9 @@ export class ServiciosAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que elimina un servicio existente.
+   */
   eliminar(id: number) {
     if (!confirm('¿Eliminar servicio?')) return;
     this.adminService.deleteServicio(id).subscribe({

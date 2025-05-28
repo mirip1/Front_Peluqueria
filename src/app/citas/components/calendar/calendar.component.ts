@@ -38,6 +38,9 @@ export class CalendarComponent implements OnInit {
     private usrService: UsuarioService
   ) {}
 
+    /**
+   * Método que inicializa el componente: carga perfil, mis citas y el mes.
+   */
   ngOnInit() {
     this.usrService.getProfile().subscribe(u => {
       this.currentUser = u;
@@ -56,6 +59,10 @@ export class CalendarComponent implements OnInit {
       .subscribe(c => this.myCitas = c);
   }
 
+
+  /**
+   * Método que carga la disponibilidad del mes actual.
+   */
   loadMonth() {
     const year = this.viewDate.getFullYear();
     const month = this.viewDate.getMonth() + 1;
@@ -66,6 +73,9 @@ export class CalendarComponent implements OnInit {
       });
   }
 
+  /**
+   * Método que genera el array de días para el grid del calendario.
+   */
   generateCalendar() {
     this.monthDays = [];
     const firstOfMonth = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth(), 1);
@@ -77,6 +87,9 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  /**
+   * Método que comprueba si un día tiene franjas disponibles.
+   */
   hasDisponible(d: Date|null): boolean {
     if (!d) return false;
     const iso = this.formatLocalDate(d);
@@ -84,6 +97,10 @@ export class CalendarComponent implements OnInit {
     return dia?.franjas.some(f => f.estado === 'DISPONIBLE') ?? false;
   }
 
+
+  /**
+   * Método que comprueba si un día ya está ocupado con cita activa.
+   */
   hasOcupado(d: Date|null): boolean {
     if (!d) return false;
     const iso = this.formatLocalDate(d);
@@ -93,16 +110,28 @@ export class CalendarComponent implements OnInit {
     );
   }
 
+  /**
+   * Método que retrocede la vista del calendario al mes anterior
+   */
   prevMonth() {
     this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth()-1, 1);
     this.loadMonth();
     this.loadMisCitas();
   }
+
+  /**
+   * Método que retrocede la vista del calendario al mes proximo
+   */
   nextMonth() {
     this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth()+1, 1);
     this.loadMonth();
     this.loadMisCitas();
   }
+
+  /**
+   * Método que maneja el clic en un día: selecciona el día,
+   * obtiene sus franjas, genera segmentos y abre el modal.
+   */
   onDayClick(d: Date|null) {
     if (!d) return;
     this.selectedDayDate = d;
@@ -112,6 +141,9 @@ export class CalendarComponent implements OnInit {
     this.showModal = true;
   }
 
+  /**
+   * Método que construye los segmentos de media hora a partir de franjas.
+   */
   private buildSegments(franjas: HorarioDTO[]): Segmento[] {
     const segments: Segmento[] = [];
     const fechaIso = this.selectedDayDate
@@ -156,13 +188,18 @@ export class CalendarComponent implements OnInit {
     return segments;
   }
 
-
+  /**
+   * Método que cierra el modal y resetea la selección.
+   */
   closeModal() {
     this.showModal = false;
     this.selectedDayDate = null;
     this.selectedDaySegments = [];
   }
 
+    /**
+   * Método que maneja la lógica cuando se hace click en un segmento
+   */
   onSegmentClick(seg: Segmento) {
     if (seg.estado !== 'DISPONIBLE' || this.isPastSegment(seg)) {
       window.alert('Esta cita no está disponible');
@@ -171,6 +208,10 @@ export class CalendarComponent implements OnInit {
     this.selectedSegment = seg;
     this.showConfirmModal = true;
   }
+
+  /**
+   * Método que confirma la reserva: crea la cita y recarga los datos.
+   */
   confirmReserva() {
 
     if (!this.currentUser || !this.selectedDayDate || !this.selectedSegment) return;
@@ -198,6 +239,9 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que cancela la reserva
+   */
   cancelReserva() {
     this.showConfirmModal = false;
     this.selectedSegment = null;
@@ -208,12 +252,16 @@ export class CalendarComponent implements OnInit {
     return d < new Date(today.getFullYear(), today.getMonth(), today.getDate());
   }
 
+
   isPastSegment(seg: Segmento): boolean {
     if (!this.selectedDayDate) return false;
     const segDateTime = new Date(`${this.formatLocalDate(this.selectedDayDate)}T${seg.startTime}:00`);
     return segDateTime < new Date();
   }
 
+  /**
+   * Método quecompruba si un dia tiene todos los segmentos no disponible
+   */
   hasFullyBooked(d: Date | null): boolean {
     if (!d) return false;
     const pad = (n: number) => n.toString().padStart(2, '0');

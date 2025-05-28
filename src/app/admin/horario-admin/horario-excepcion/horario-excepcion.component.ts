@@ -38,10 +38,16 @@ export class HorarioExcepcionComponent implements OnInit {
     private adminService: AdminService
   ) { }
 
+  /**
+   * Método que inicia la carga del mes al inicializar el componente.
+   */
   ngOnInit() {
     this.loadMonth();
   }
 
+  /**
+   * Método que obtiene la disponibilidad del mes actual.
+   */
   loadMonth() {
     const y = this.viewDate.getFullYear(),
       m = this.viewDate.getMonth() + 1;
@@ -52,15 +58,25 @@ export class HorarioExcepcionComponent implements OnInit {
       });
   }
 
+  /**
+   * Método que retrocede al mes anterior en el calendario.
+   */
   prevMonth() {
     this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
     this.loadMonth();
   }
+
+  /**
+   * Método que avanza al mes siguiente en el calendario.
+   */
   nextMonth() {
     this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
     this.loadMonth();
   }
 
+  /**
+   * Método que genera el grid de días del mes.
+   */
   generateCalendar() {
     this.monthDays = [];
     const first = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth(), 1);
@@ -72,6 +88,9 @@ export class HorarioExcepcionComponent implements OnInit {
     }
   }
 
+  /**
+   * Método que gestiona el clic en un día para cargar sus excepciones.
+   */
   onDayClick(d: Date | null) {
     if (!d) return;
     this.selectedDate = d;
@@ -92,11 +111,16 @@ export class HorarioExcepcionComponent implements OnInit {
     this.showModal = true;
   }
 
-
+  /**
+   * Método que cierra el modal de excepciones.
+   */
   closeModal() {
     this.showModal = this.showNew = false;
   }
 
+  /**
+   * Método que crea una nueva excepción para el día seleccionado.
+   */
   createException() {
     const dto: HorarioDTO = {
       id: 0,
@@ -110,6 +134,9 @@ export class HorarioExcepcionComponent implements OnInit {
       .subscribe(() => this.onDayClick(this.selectedDate));
   }
 
+  /**
+   * Método que elimina una excepción existente.
+   */
   deleteException(id: number) {
     this.adminService.deleteExcepcion(id)
       .subscribe(() => this.onDayClick(this.selectedDate));

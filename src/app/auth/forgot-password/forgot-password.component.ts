@@ -15,6 +15,9 @@ export class ForgotPasswordComponent {
   msg = '';
   constructor(private auth: AuthService, private router: Router) {}
 
+  /**
+   * Método que envía una solicitud de recuperación de contraseña por email.
+   */
   onSubmit() {
     this.auth.forgotPassword(this.email).subscribe({
       next: () => {
@@ -25,6 +28,10 @@ export class ForgotPasswordComponent {
       }
     });
   }
+
+  /**
+   * Método que redirige a la página de login.
+   */
   goToLogIn(): void {
     this.router.navigate(['/auth/login']);
   }

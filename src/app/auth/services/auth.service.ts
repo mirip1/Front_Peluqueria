@@ -17,11 +17,14 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Método que envía las credenciales y guarda el token en localStorage.
+   */
   login(credentials: { email: string; password: string }): Observable<void> {
     return this.http.post<{ token: string }>(
-        `${this.apiUrl}/login`,
-        credentials
-      )
+      `${this.apiUrl}/login`,
+      credentials
+    )
       .pipe(
         tap(response => {
           localStorage.setItem('authToken', response.token);
@@ -29,19 +32,32 @@ export class AuthService {
         map((): void => undefined)
       );
   }
+
+  /**
+   * Método que pilla el token actual del usuario.
+   */
   getToken(): string | null {
     return localStorage.getItem('authToken');
   }
 
+  /**
+   * Método que envía los datos de un nuevo usuario y lo crea
+   */
   register(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, userData);
   }
 
+  /**
+   * Método que elimina el token y notifica el logout.
+   */
   logout(): void {
     localStorage.removeItem('authToken');
     this.currentUserSubject.next(null);
   }
 
+  /**
+   * Método que carga el perfil y actualiza el sujeto currentUser.
+   */
   loadProfile(): Observable<UsuarioDTO> {
     return this.http.get<UsuarioDTO>(`${this.apiUrl}/profile`).pipe(
       tap(user => this.currentUserSubject.next(user))
@@ -51,16 +67,21 @@ export class AuthService {
     return this.currentUserSubject.asObservable();
   }
 
-forgotPassword(email: string): Observable<void> {
-  return this.http.post<void>(
-    `${Constant.apiUrl}/api/usuarios/forgot-password`,
-    null,
-    { params: { email } }
-  );
-}
+  /**
+   * Método que se encarga de la logica al olvidar la contraseña de un usuario
+   */
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(
+      `${Constant.apiUrl}/api/usuarios/forgot-password`,
+      null,
+      { params: { email } }
+    );
+  }
 
 
-
+  /**
+   * Método que inicia el servicio: si hay token intenta cargar perfil.
+   */
   init(): void {
     const token = this.getToken();
     if (token) {

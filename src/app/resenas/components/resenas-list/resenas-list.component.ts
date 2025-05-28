@@ -27,6 +27,7 @@ export class ResenasListComponent implements OnInit {
 
   sortMode: 'date' | 'scoreAsc' | 'scoreDesc' = 'date';
 
+  /** Método que se ejecuta al inicializar el componente: carga perfil y reseñas. */
   ngOnInit(): void {
     this.usuarioService.getProfile().subscribe(user => {
       this.currentUser = user;
@@ -34,6 +35,7 @@ export class ResenasListComponent implements OnInit {
     });
   }
 
+  /** Método que carga todas las reseñas y decide si se puede añadir una nueva. */
   loadResenas() {
     this.service.getAll().subscribe(list => {
       this.resenas = list;
@@ -41,6 +43,7 @@ export class ResenasListComponent implements OnInit {
     });
   }
 
+  /** Método que envía la nueva reseña si está permitido. */
   enviar() {
     if (!this.canAdd) return;
     this.service.add(this.nueva).subscribe({
@@ -51,12 +54,15 @@ export class ResenasListComponent implements OnInit {
     });
   }
 
+  /** Método que borra una reseña dado su id. */
   borrar(id: number) {
     this.service.delete(id).subscribe({
       next: () => this.loadResenas(),
       error: err => console.error(err)
     });
   }
+
+  /** Método que devuelve las reseñas ordenadas según el modo actual. */
   get sortedResenas(): Resena[] {
     const arr = [...this.resenas];
 

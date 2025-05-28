@@ -13,9 +13,16 @@ export class HorarioService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Método que obtiene los horarios de un día específico.
+   */
   getHorariosPorFecha(fecha: string): Observable<HorarioDTO[]> {
     return this.http.get<HorarioDTO[]>(`${this.apiUrlH}/fecha/${fecha}`);
   }
+
+  /**
+   * Método que obtiene la disponibilidad de un mes completo.
+   */
   getMesDisponibilidad(year: number, month: number): Observable<DisponibilidadDiaDTO[]> {
     return this.http.get<DisponibilidadDiaDTO[]>(
       `${this.apiUrlD}${year}/${month}`

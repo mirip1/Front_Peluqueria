@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+
+  /**
+   * Método que intercepta peticiones HTTP y añade el token JWT al header Authorization si existe.
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('authToken');
     if (token) {

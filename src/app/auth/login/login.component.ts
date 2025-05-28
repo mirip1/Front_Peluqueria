@@ -18,14 +18,23 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  /**
+   * Método que navega a la página de registro.
+   */
   goToRegister(): void {
     this.router.navigate(['/auth/register']);
   }
 
+  /**
+   * Método que navega a la página de recuperación de contraseña.
+   */
   goToForgot(): void {
     this.router.navigate(['/forgot-password']);
   }
 
+  /**
+   * Método que procesa el login limpiando el storage y navegando al home.
+   */
   onLogin(): void {
     localStorage.clear();
     sessionStorage.clear();

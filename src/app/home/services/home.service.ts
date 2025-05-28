@@ -13,6 +13,7 @@ export class HomeService {
 
   constructor(private http: HttpClient) {}
 
+  /** Método que obtiene los datos básicos de la peluquería. */
   getPeluqueria(): Observable<Peluqueria> {
     return this.http.get<Peluqueria>(this.apiUrl);
   }

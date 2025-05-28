@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit{
   constructor(public auth: AuthService, private router: Router, private service: HomeService) {}
   titulo = "";
 
+  // Método que inicializa el componente y establece el título desde la peluquería
   ngOnInit(): void {
     this.service.getPeluqueria().subscribe(p=>{
       this.titulo = p.nombre;
@@ -24,6 +25,7 @@ export class NavBarComponent implements OnInit{
 
   }
 
+  // Método que comprueba si el usuario está autenticado
   isLoggedIn(): boolean {
     return !!this.auth.currentUser;
   }

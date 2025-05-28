@@ -22,6 +22,9 @@ export class HistorialCitasComponent implements OnInit {
     private usuarioService: UsuarioService
   ) {}
 
+  /**
+   * Método que inicializa el componente: carga perfil y citas del usuario.
+   */
   ngOnInit(): void {
     this.usuarioService.getProfile().subscribe({
       next: u => {
@@ -32,6 +35,9 @@ export class HistorialCitasComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que carga las citas del usuario logueado.
+   */
   loadCitas() {
     if (!this.currentUser) return;
     this.loading = true;
@@ -48,6 +54,9 @@ export class HistorialCitasComponent implements OnInit {
       });
   }
 
+  /**
+   * Método que elimina una cita y recarga la página.
+   */
   onDelete(cita: Cita) {
     if (!confirm('¿Borrar esta cita?')) return;
     this.citaService.deleteCita(cita.id).subscribe({

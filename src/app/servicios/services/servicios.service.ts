@@ -13,6 +13,7 @@ export class ServiciosService {
 
   constructor(private http: HttpClient) {}
 
+  // Método que obtiene todos los servicios disponibles
   getAll(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(this.apiUrl);
   }

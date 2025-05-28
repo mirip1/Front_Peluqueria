@@ -20,10 +20,16 @@ export class CitasAdminComponent implements OnInit {
 
   constructor(private adminService: AdminService) { }
 
+  /**
+   * Método que se ejecuta al inicializar y carga la lista de citas.
+   */
   ngOnInit() {
     this.fetchCitas();
   }
 
+  /**
+   * Método que obtiene todas las citas del servicio.
+   */
   fetchCitas() {
     this.adminService.listCitas().subscribe(list => this.citas = list);
   }
@@ -56,11 +62,18 @@ export class CitasAdminComponent implements OnInit {
     }
     return arr;
   }
+
+  /**
+   * Método que cancela una cita seleccionada.
+   */
   cancelarCita(id: number) {
     if (!confirm('¿Cancelar esta cita?')) return;
     this.adminService.cancelCita(id).subscribe(() => this.fetchCitas());
   }
 
+  /**
+   * Método que ordena las citas por la columna indicada.
+   */
   sortBy(col: string) {
     if (this.sortColumn === col) {
       this.sortAsc = !this.sortAsc;
@@ -91,6 +104,9 @@ export class CitasAdminComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que indica el símbolo de orden actual para la columna.
+   */
   isSorted(col: string): '↑' | '↓' | '' {
     if (this.sortColumn !== col) return '';
     return this.sortAsc ? '↑' : '↓';

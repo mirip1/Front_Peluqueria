@@ -18,12 +18,18 @@ export class PeluqueriaAdminComponent implements OnInit {
 
   constructor(private adminService: AdminService, private router: Router){}
 
+  /**
+   * Método que carga los datos actuales de la peluquería.
+   */
   ngOnInit(){
     this.adminService.getPeluqueria().subscribe(p=>{
       this.dto = p;
     });
   }
 
+  /**
+   * Método que envía los cambios de la peluquería al servidor.
+   */
   onSubmit(){
     this.msg = '';
     this.adminService.updatePeluqueria(this.dto).subscribe({

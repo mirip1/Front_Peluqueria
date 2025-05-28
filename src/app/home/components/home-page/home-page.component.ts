@@ -25,9 +25,12 @@ export class HomePageComponent implements OnInit {
 
   private readonly googleApiKey = '${API_GOOGLE}';
 
-  constructor(private homeService: HomeService, private sanitizer: DomSanitizer) {}
+  constructor(private homeService: HomeService, private sanitizer: DomSanitizer) { }
 
-
+  /**
+   * Método que inicializa el componente, carga datos de la peluquería,
+   * actualiza el mapa y arranca el carrusel.
+   */
   ngOnInit(): void {
     const recargar = sessionStorage.getItem('recargado');
 
@@ -44,13 +47,20 @@ export class HomePageComponent implements OnInit {
 
   }
 
+    /**
+   * Método que arranca el carrusel de imágenes cambiando slide cada 5 segundos.
+   */
   startCarousel() {
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % this.slides.length;
     }, 5000);
 
   }
-    private updateMapUrl() {
+
+  /**
+   * Método que construye y actualiza la URL segura para el iframe de Google Maps.
+   */
+  private updateMapUrl() {
     if (!this.peluqueria?.ubicacion) {
       this.mapUrl = undefined;
       console.log(this.peluqueria?.ubicacion);

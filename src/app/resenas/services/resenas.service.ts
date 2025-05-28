@@ -12,14 +12,17 @@ export class ResenasService {
 
   constructor(private http: HttpClient) {}
 
+  /** Método que obtiene todas las reseñas. */
   getAll(): Observable<Resena[]> {
     return this.http.get<Resena[]>(this.apiUrl);
   }
 
+  /** Método que añade una nueva reseña. */
   add(resena: Partial<Resena>): Observable<Resena> {
     return this.http.post<Resena>(this.apiUrl, resena);
   }
 
+  /** Método que elimina una reseña por su id. */
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
