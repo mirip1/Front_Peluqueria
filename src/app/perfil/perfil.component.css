@@ -82,7 +82,7 @@
   color: #006064;
 }
 
-.msg.error {
+.error-message {
   background: #ffebee;
   color: #c62828;
 }
