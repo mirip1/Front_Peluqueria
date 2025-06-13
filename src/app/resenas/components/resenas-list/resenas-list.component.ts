@@ -23,6 +23,7 @@ export class ResenasListComponent implements OnInit {
   constructor(
     private service: ResenasService,
     private usuarioService: UsuarioService,
+    public auth: AuthService
   ) {}
 
   sortMode: 'date' | 'scoreAsc' | 'scoreDesc' = 'date';
@@ -31,8 +32,8 @@ export class ResenasListComponent implements OnInit {
   ngOnInit(): void {
     this.usuarioService.getProfile().subscribe(user => {
       this.currentUser = user;
-      this.loadResenas();
     });
+    this.loadResenas();
   }
 
   /** Método que carga todas las reseñas y decide si se puede añadir una nueva. */
@@ -42,6 +43,13 @@ export class ResenasListComponent implements OnInit {
       this.canAdd = !list.some(r => r.usuarioId === this.currentUser?.id);
     });
   }
+
+
+   /**  Método que comprueba si el usuario está autenticado */
+  isLoggedIn(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
 
   /** Método que envía la nueva reseña si está permitido. */
   enviar() {

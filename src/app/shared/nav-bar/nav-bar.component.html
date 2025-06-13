@@ -13,6 +13,6 @@
   </ul>
   <div class="navbar-actions">
     <a *ngIf="!isLoggedIn()" routerLink="/auth/login">Login</a>
-    <a routerLink="/perfil">Perfil</a>
+    <a *ngIf="isLoggedIn()" routerLink="/perfil">Perfil</a>
   </div>
 </nav>

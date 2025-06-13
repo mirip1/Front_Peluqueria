@@ -5,7 +5,9 @@
   <p *ngIf="!canAdd" class="info">
     Ya tienes una reseña activa. Borra tu reseña activa si quieres poner una nueva.
   </p>
-  <div class="form-resena">
+
+
+  <div *ngIf="isLoggedIn()" class="form-resena">
     <textarea name="comentario" [(ngModel)]="nueva.comentario" #comentario="ngModel" required minlength="5" maxlength="500"
       pattern='^[A-Za-z0-9ÁÉÍÓÚáéíóúñÑ\s\.,;:!\?\(\)\-]+$' placeholder="Tu opinión..." rows="4" class="textarea"
       [disabled]="!canAdd" [class.invalid]="comentario.invalid && comentario.touched">

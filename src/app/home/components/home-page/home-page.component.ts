@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
   ];
   currentSlide = 0;
 
-  private readonly googleApiKey = 'AIzaSyAzjQ81m8JemYS6XX8WaRXLseN1sDsRCIc';
+  private readonly googleApiKey = '${API_GOOGLE}';
 
   constructor(private homeService: HomeService, private sanitizer: DomSanitizer) { }
 

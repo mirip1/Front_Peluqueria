@@ -27,7 +27,7 @@ export class NavBarComponent implements OnInit{
 
   // Método que comprueba si el usuario está autenticado
   isLoggedIn(): boolean {
-    return !!this.auth.currentUser;
+    return this.auth.isAuthenticated();
   }
 
 

@@ -68,6 +68,15 @@ export class AuthService {
   }
 
   /**
+   * Método que devuelve true si hay token en localStorage y no está expirado
+   */
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+    return true;
+  }
+
+  /**
    * Método que se encarga de la logica al olvidar la contraseña de un usuario
    */
   forgotPassword(email: string): Observable<void> {

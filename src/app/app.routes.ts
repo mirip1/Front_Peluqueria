@@ -29,8 +29,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'resenas', loadChildren: () => import('./resenas/resenas.module').then(m => m.ResenasModule),
-    canActivate: [AuthGuard]
+    path: 'resenas', loadChildren: () => import('./resenas/resenas.module').then(m => m.ResenasModule)
   },
 
   { path: 'perfil', component: PerfilComponent,
